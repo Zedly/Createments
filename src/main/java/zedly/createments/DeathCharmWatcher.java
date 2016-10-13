@@ -25,7 +25,10 @@ public class DeathCharmWatcher implements Listener {
     public void onPlayerDeath(PlayerDeathEvent evt) {
         for (ItemStack stk : evt.getDrops()) {
             if (Utilities.matchItemStack(stk, Material.PAPER, 0, null, null)) {
-                if (stk.getItemMeta().getLore().get(0) != null) {
+                if (stk.hasItemMeta() && 
+                        stk.getItemMeta().hasLore() && 
+                        stk.getItemMeta().hasDisplayName() && 
+                        stk.getItemMeta().getLore().get(0) != null) {
                     if (stk.getItemMeta().getDisplayName().equals(ChatColor.DARK_PURPLE + "Advanced Death Charm") && stk.getItemMeta().getLore().get(0).contains(Storage.BOX_CHAR + "")) {
                         int charge = getDeathCharmCharge(stk);
                         if (charge <= 0) {
