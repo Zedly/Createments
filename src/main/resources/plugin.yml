@@ -1,0 +1,40 @@
+name: Createments
+main: zedly.createments.Createments
+version: 3.14.159.2654
+commands:
+  cr:
+    description: 
+    usage: /cr
+
+permissions:
+  createments.apocalypse:
+    description: Starts/Stops the apocalypse
+    default: false
+  createments.aura:
+    description: Spawns an aura around the player
+    default: false
+  createments.emoticons:
+    description: Use of emoticons in chat
+    default: true
+  createments.fusrodah:
+    description: Blasts mobs and items away from the user.
+    default: false
+  createments.paragrapher:
+    description: Creates paragraphers
+    default: false
+  createments.rainboom:
+    description: Creates a rainbow trail of fireworks for the flying player
+    default: false
+  createments.rainbow:
+    description: Makes the player's text colorful
+    default: false
+  
+  createments.*:
+    children:
+        createments.apocalypse: true
+        createments.aura: true
+        createments.emoticons: true
+        createments.fusrodah: true
+        createments.rainboom: true
+        createments.rainbow: true
+        createments.paragrapher: true

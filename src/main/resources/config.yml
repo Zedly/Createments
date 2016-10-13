@@ -1,0 +1,17 @@
+# A list of replacements to apply to chat messages.
+# For Unicode emoticons, use Java escape sequences:
+# http://www.freeformatter.com/java-dotnet-escape.html#ad-output
+replacements:
+  - replace: ":lenny:"
+    with: "(\u0361\u035C\u0296\u0361)"
+  - replace: ":shrug:"
+    with: "\u00AF\\_(\u30C4)_/\u00AF"
+  - replace: ":teddy:"
+    with: "\u0295\u2022\u1D25\u2022\u0294"  
+  - replace: ":tableflip:"
+    with: "(\u30CE\u0CA0\u76CA\u0CA0)\u30CE\u5F61\u253B\u2501\u253B"  
+  - replace: ":yuno:"
+    with: "\u10DA(\u0CA0\u76CA\u0CA0\u10DA)"  
+  - replace: ":disapproval:"
+    with: "\u0CA0_\u0CA0"
+ 
