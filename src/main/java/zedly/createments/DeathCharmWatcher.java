@@ -10,6 +10,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.inventory.ItemStack;
@@ -21,7 +22,7 @@ import org.bukkit.inventory.meta.ItemMeta;
  */
 public class DeathCharmWatcher implements Listener {
 
-    @EventHandler // Death Charms
+    @EventHandler(priority = EventPriority.HIGHEST) // Death Charms
     public void onPlayerDeath(PlayerDeathEvent evt) {
         if (evt.getKeepInventory()) {
             return;
@@ -40,6 +41,7 @@ public class DeathCharmWatcher implements Listener {
                         setDeathCharmCharge(stk, charge - 1, 2);
                         evt.setKeepInventory(true);
                         evt.setKeepLevel(true);
+                        evt.setDroppedExp(0);
                         break;
                     } else if (stk.getItemMeta().getDisplayName().equals(ChatColor.GOLD + "Basic Death Charm") && stk.getItemMeta().getLore().get(0).contains(Storage.BOX_CHAR + "")) {
                         int charge = getDeathCharmCharge(stk);

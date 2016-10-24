@@ -32,8 +32,8 @@ public class Createments extends JavaPlugin {
     }
 
     private void loadConfig() {
-        FileConfiguration fc = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "config.yml"));
-        List<Map<?, ?>> emoticonList = fc.getMapList("replacements");
+        FileConfiguration fc = getConfig();
+        List<Map<?, ?>> emoticonList = fc.getMapList("emoticons");
         for (Map<?, ?> map : emoticonList) {
             if (map.containsKey("replace") && map.containsKey("with")) {
                 Object replace = map.get("replace");

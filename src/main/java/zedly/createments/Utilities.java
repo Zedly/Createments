@@ -10,10 +10,11 @@ import org.bukkit.inventory.*;
 public class Utilities {
 
     /**
-     * Calculates the Location corresponding to the horizontal center of the same block coordinates
-     * as the given location. 
-     * The result has an unaffected Y coordinate, but X and Z are in the center of the block.
-     * @param loc the location 
+     * Calculates the Location corresponding to the horizontal center of the
+     * same block coordinates as the given location. The result has an
+     * unaffected Y coordinate, but X and Z are in the center of the block.
+     *
+     * @param loc the location
      * @return the centered Location
      */
     public static Location getCenter(Location loc) {
@@ -144,7 +145,14 @@ public class Utilities {
         if (name != null && !(is.getItemMeta().hasDisplayName() || !is.getItemMeta().getDisplayName().equals(name))) {
             return false;
         }
-        if (lore != null && !(is.getItemMeta().hasLore() || !is.getItemMeta().getLore().contains(lore))) {
+        if (lore != null) {
+            if (is.getItemMeta().hasLore()) {
+                for (String loreLine : is.getItemMeta().getLore()) {
+                    if (loreLine.equals(lore)) {
+                        return true;
+                    }
+                }
+            }
             return false;
         }
         return true;
