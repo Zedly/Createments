@@ -99,6 +99,8 @@ public class CommandProcessor {
                                 sb.append(replace);
                                 comma = true;
                             }
+                            sender.sendMessage(Storage.logo + "Available emoticons:");
+                            sender.sendMessage(sb.toString());
                             break;
                         }
                         case "fusrodah": {
