@@ -15,33 +15,6 @@ public class CommandProcessor {
             case "cr":
                 if (args.length != 0) {
                     switch (args[0]) {
-                        case "paragrapher": {
-                            if (!sender.hasPermission("createments.paragrapher")) {
-                                sender.sendMessage(Storage.logo + " You do not have permission to do this!");
-                                break;
-                            }
-                            if (!(sender instanceof Player)) {
-                                sender.sendMessage(Storage.logo + " You must be a Player to spawn a Paragrapher!");
-                                return true;
-                            }
-                            Player player = (Player) sender;
-                            ItemStack stk = new ItemStack(Material.BOOK_AND_QUILL);
-                            BookMeta bm = (BookMeta) stk.getItemMeta();
-                            bm.addPage("Equation for X:\n");
-                            bm.addPage("Equation for Y:\n");
-                            bm.addPage("Equation for Z:\n");
-                            bm.addPage("t Min:\n");
-                            bm.addPage("t Max:\n");
-                            bm.addPage("t Increment:\n");
-                            bm.addPage("t Delay:\n");
-                            ArrayList<String> lore = new ArrayList<>();
-                            lore.add(ChatColor.YELLOW + "Paragrapher");
-                            bm.setLore(lore);
-                            stk.setItemMeta(bm);
-                            player.getInventory().addItem(stk);
-                            player.sendMessage(Storage.logo + " Spawned a Paragrapher!");
-                            break;
-                        }
                         case "apocalypse": {
                             if (!sender.hasPermission("createments.apocalypse")) {
                                 break;
@@ -112,6 +85,63 @@ public class CommandProcessor {
                             }
                             break;
                         }
+                        case "emotes": {
+                            if (!sender.hasPermission("createments.emoticons")) {
+                                sender.sendMessage(Storage.logo + " You do not have permission to do this!");
+                                return true;
+                            }
+                            StringBuilder sb = new StringBuilder();
+                            boolean comma = false;
+                            for (String replace : Storage.emoticonSubstitutions.keySet()) {
+                                if (comma) {
+                                    sb.append(", ");
+                                }
+                                sb.append(replace);
+                                comma = true;
+                            }
+                            break;
+                        }
+                        case "fusrodah": {
+                            if (!sender.hasPermission("createments.fusrodah")) {
+                                sender.sendMessage(Storage.logo + " You do not have permission to do this!");
+                                return true;
+                            }
+                            Player player = (Player) sender;
+                            for (Entity ent : player.getNearbyEntities(5, 5, 5)) {
+                                Vector dv = ent.getLocation().subtract(player.getLocation()).toVector();
+                                dv.multiply(1 / dv.length());
+                                ent.setVelocity(dv.add(new Vector(0, 1.5, 0)));
+                            }
+                            player.getWorld().createExplosion(player.getLocation(), 0);
+                            break;
+                        }
+                        case "paragrapher": {
+                            if (!sender.hasPermission("createments.paragrapher")) {
+                                sender.sendMessage(Storage.logo + " You do not have permission to do this!");
+                                break;
+                            }
+                            if (!(sender instanceof Player)) {
+                                sender.sendMessage(Storage.logo + " You must be a Player to spawn a Paragrapher!");
+                                return true;
+                            }
+                            Player player = (Player) sender;
+                            ItemStack stk = new ItemStack(Material.BOOK_AND_QUILL);
+                            BookMeta bm = (BookMeta) stk.getItemMeta();
+                            bm.addPage("Equation for X:\n");
+                            bm.addPage("Equation for Y:\n");
+                            bm.addPage("Equation for Z:\n");
+                            bm.addPage("t Min:\n");
+                            bm.addPage("t Max:\n");
+                            bm.addPage("t Increment:\n");
+                            bm.addPage("t Delay:\n");
+                            ArrayList<String> lore = new ArrayList<>();
+                            lore.add(ChatColor.YELLOW + "Paragrapher");
+                            bm.setLore(lore);
+                            stk.setItemMeta(bm);
+                            player.getInventory().addItem(stk);
+                            player.sendMessage(Storage.logo + " Spawned a Paragrapher!");
+                            break;
+                        }
                         case "rainboom": {
                             if (!sender.hasPermission("createments.rainboom")) {
                                 sender.sendMessage(Storage.logo + " You do not have permission to do this!");
@@ -152,20 +182,18 @@ public class CommandProcessor {
                             }
                             break;
                         }
-                        case "fusrodah": {
-                            if (!sender.hasPermission("createments.fusrodah")) {
+                        case "reload":
+                            if (!sender.hasPermission("createments.rainbow")) {
                                 sender.sendMessage(Storage.logo + " You do not have permission to do this!");
                                 return true;
                             }
-                            Player player = (Player) sender;
-                            for (Entity ent : player.getNearbyEntities(5, 5, 5)) {
-                                Vector dv = ent.getLocation().subtract(player.getLocation()).toVector();
-                                dv.multiply(1 / dv.length());
-                                ent.setVelocity(dv.add(new Vector(0, 1.5, 0)));
+                            try {
+                                Createments.getPlugin(Createments.class).loadConfig();
+                                sender.sendMessage(Storage.logo + " Configuration reloaded!");
+                            } catch (Exception ex) {
+                                sender.sendMessage(Storage.logo + ChatColor.RED + " Reload failed! Createments will be unable to start with this config");
                             }
-                            player.getWorld().createExplosion(player.getLocation(), 0);
                             break;
-                        }
                     }
                     break;
                 }

@@ -14,4 +14,8 @@ replacements:
     with: "\u10DA(\u0CA0\u76CA\u0CA0\u10DA)"  
   - replace: ":disapproval:"
     with: "\u0CA0_\u0CA0"
- 
+  - replace: ":cool:"
+    with: "(\u2310\u25A0_\u25A0)"
+  - replace: ":dongers:"
+    with: "\u30FD\u0F3C\u0E88\u0644\u035C\u0E88\u0F3D\uFF89"
+    

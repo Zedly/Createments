@@ -1,12 +1,9 @@
 package zedly.createments;
 
-import java.io.File;
 import java.util.List;
 import java.util.Map;
-import org.bukkit.World;
 import org.bukkit.command.*;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 import zedly.fireworkeffects.*;
 
@@ -31,18 +28,20 @@ public class Createments extends JavaPlugin {
         return CommandProcessor.onCommand(sender, command, commandlabel, args);
     }
 
-    private void loadConfig() {
+    public boolean loadConfig() {
+        reloadConfig();
         FileConfiguration fc = getConfig();
-        List<Map<?, ?>> emoticonList = fc.getMapList("emoticons");
+        List<Map<?, ?>> emoticonList = fc.getMapList("replacements");
         for (Map<?, ?> map : emoticonList) {
             if (map.containsKey("replace") && map.containsKey("with")) {
                 Object replace = map.get("replace");
                 Object with = map.get("with");
+                Storage.emoticonSubstitutions.clear();
                 if (replace instanceof String && with instanceof String) {
                     Storage.emoticonSubstitutions.put((String) replace, (String) with);
                 }
             }
-
         }
+        return true;
     }
 }
