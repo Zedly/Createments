@@ -32,11 +32,11 @@ public class Createments extends JavaPlugin {
         reloadConfig();
         FileConfiguration fc = getConfig();
         List<Map<?, ?>> emoticonList = fc.getMapList("replacements");
+        Storage.emoticonSubstitutions.clear();
         for (Map<?, ?> map : emoticonList) {
             if (map.containsKey("replace") && map.containsKey("with")) {
                 Object replace = map.get("replace");
                 Object with = map.get("with");
-                Storage.emoticonSubstitutions.clear();
                 if (replace instanceof String && with instanceof String) {
                     Storage.emoticonSubstitutions.put((String) replace, (String) with);
                 }
