@@ -43,5 +43,10 @@ public class HFEffects implements Runnable {
         for (Block b : del) {
             Storage.decay.remove(b);
         }
+        
+        for(Entity ent : Storage.fairies) {
+            //ent.getWorld().spawnParticle(Particle.END_ROD, ent.getLocation(), 1, 0.05, 0.05, 0.05, 0);
+            //ent.getWorld().spawnParticle(Particle.HEART, ent.getLocation(), 1, 0.25, 0.25, 0.25, 0);
+        }
     }
 }

@@ -53,7 +53,7 @@ public class Rainboom implements Runnable {
             bu = bu.trail(true);
             bu = bu.with(FireworkEffect.Type.BALL);
             try {
-                Storage.fep.playFirework(player.getLocation().add(new Vector(0, 1, 0)), bu.build());
+                FireworkEffectPlayer.playFirework(player.getLocation().add(new Vector(0, 1, 0)), bu.build());
             } catch (Exception ex) {
                 ex.printStackTrace();
                 System.out.println("FireworkContrail error! Cancelling firework!");

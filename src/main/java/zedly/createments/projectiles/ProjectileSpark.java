@@ -5,7 +5,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.SmallFireball;
 import org.bukkit.util.Vector;
-import zedly.fireworkeffects.FireworkEffectPlayer;
+import zedly.createments.FireworkEffectPlayer;
 import zedly.createments.Storage;
 
 public class ProjectileSpark extends AdvancedProjectile {
@@ -21,7 +21,7 @@ public class ProjectileSpark extends AdvancedProjectile {
     @Override
     public void trail() {
         try {
-            Storage.fep.playFirework(sf.getLocation(), bu.build());
+            FireworkEffectPlayer.playFirework(sf.getLocation(), bu.build());
         } catch (Exception ex) {
             sf.remove();
         }

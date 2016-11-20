@@ -5,7 +5,6 @@ import java.util.Map;
 import org.bukkit.command.*;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
-import zedly.fireworkeffects.*;
 
 public class Createments extends JavaPlugin {
 
@@ -14,7 +13,6 @@ public class Createments extends JavaPlugin {
         saveDefaultConfig();
         loadConfig();
         Storage.createments = this;
-        Storage.fep = new FireworkEffectPlayer(this);
         getServer().getScheduler().scheduleSyncRepeatingTask(this, new HFEffects(), 0, 1);
         getServer().getPluginManager().registerEvents(new Watcher(), this);
         getServer().getPluginManager().registerEvents(new DeathCharmWatcher(), this);

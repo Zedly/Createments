@@ -3,7 +3,7 @@ package zedly.createments.projectiles;
 import org.bukkit.FireworkEffect;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.SmallFireball;
-import zedly.fireworkeffects.FireworkEffectPlayer;
+import zedly.createments.FireworkEffectPlayer;
 import zedly.createments.Storage;
 
 public class ProjectileSignal extends AdvancedProjectile {
@@ -25,7 +25,7 @@ public class ProjectileSignal extends AdvancedProjectile {
     @Override
     public void impact() {
         try {
-            Storage.fep.playFirework(sf.getLocation(), bu.build());
+            FireworkEffectPlayer.playFirework(sf.getLocation(), bu.build());
         } catch (Exception ex) {
             sf.remove();
         }

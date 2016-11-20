@@ -6,7 +6,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.SmallFireball;
 import org.bukkit.util.Vector;
-import zedly.fireworkeffects.FireworkEffectPlayer;
+import zedly.createments.FireworkEffectPlayer;
 import zedly.createments.Storage;
 
 public class ProjectileRepulsor extends AdvancedProjectile {
@@ -19,7 +19,7 @@ public class ProjectileRepulsor extends AdvancedProjectile {
 
     public void trail() {
         try {
-            Storage.fep.playFirework(sf.getLocation(), bu.build());
+            FireworkEffectPlayer.playFirework(sf.getLocation(), bu.build());
         } catch (Exception ex) {
             sf.remove();
         }

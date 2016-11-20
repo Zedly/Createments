@@ -12,7 +12,7 @@ public class Recipes {
         ItemMeta meta = paper.getItemMeta();
         meta.setDisplayName(ChatColor.GOLD + "Basic Death Charm");
         List<String> lore = new ArrayList<>();
-        lore.add("" + ChatColor.GREEN + Storage.BOX_CHAR + Storage.BOX_CHAR + Storage.BOX_CHAR + Storage.BOX_CHAR + Storage.BOX_CHAR);
+        lore.add("" + ChatColor.DARK_GREEN + Storage.BOX_CHAR + Storage.BOX_CHAR + Storage.BOX_CHAR + Storage.BOX_CHAR + Storage.BOX_CHAR);
         meta.setLore(lore);
         paper.setItemMeta(meta);
         ShapelessRecipe recipe = new ShapelessRecipe(new ItemStack(paper));

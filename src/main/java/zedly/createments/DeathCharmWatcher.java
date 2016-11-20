@@ -66,10 +66,10 @@ public class DeathCharmWatcher implements Listener {
         int charge = 0;
         boolean b = false;
         for (char c : chars) {
-            if (c == 'a') {
+            if (c == '2') {
                 b = true;
             }
-            if (c == 'c') {
+            if (c == '4') {
                 b = false;
             }
             if (c == Storage.BOX_CHAR && b) {
