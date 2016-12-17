@@ -1,14 +1,11 @@
 package zedly.createments;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import org.bukkit.*;
 import org.bukkit.command.*;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BookMeta;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
 public class CommandProcessor {
