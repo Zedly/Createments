@@ -1,18 +1,28 @@
 package zedly.createments;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.*;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
+import zedly.createments.projectiles.AdvancedArrow;
+import zedly.createments.projectiles.ElementalArrow;
 
 public class Utilities {
 
     /**
-     * Calculates the Location corresponding to the horizontal center of the
-     * same block coordinates as the given location. The result has an
-     * unaffected Y coordinate, but X and Z are in the center of the block.
+     * Calculates the Location corresponding to the horizontal center of the same block
+     * coordinates as the given location. The result has an unaffected Y coordinate, but X
+     * and Z are in the center of the block.
      *
      * @param loc the location
      * @return the centered Location
@@ -37,8 +47,8 @@ public class Utilities {
     }
 
     /**
-     * Inserts color codes after each character in the input message, forming a
-     * rainbow pattern. Starts at a randomly chosen point in the rainbow
+     * Inserts color codes after each character in the input message, forming a rainbow
+     * pattern. Starts at a randomly chosen point in the rainbow
      *
      * @param message The original message
      * @return The message with color codes inserted
@@ -57,8 +67,8 @@ public class Utilities {
     }
 
     /**
-     * Removes one or more items with the specified properties from the given
-     * inventory. Item stacks consisting of a single item will be set to null.
+     * Removes one or more items with the specified properties from the given inventory.
+     * Item stacks consisting of a single item will be set to null.
      *
      * @param inv the inventory to edit
      * @param mat the material of the items to remove
@@ -88,21 +98,19 @@ public class Utilities {
     }
 
     /**
-     * Places a block on the given player's behalf. Fires a BlockPlaceEvent with
-     * (nearly) appropriate parameters to probe the legitimacy (permissions etc)
-     * of the action and to communicate to other plugins where the block is
-     * coming from.
+     * Places a block on the given player's behalf. Fires a BlockPlaceEvent with (nearly)
+     * appropriate parameters to probe the legitimacy (permissions etc) of the action and
+     * to communicate to other plugins where the block is coming from.
      *
      * @param player the player whose identity to use
      * @param mat the material to set the block to, if allowed
      * @param blockData the block data to set for the block, if allowed
-     * @param blockAgainst the block against which the new block should be
-     * placed. CAN be air, but this might cause other plugins to malfunction
-     * @param blockFace the face of blockAgainst on which the new block will be
-     * placed. This also determines the location of the new block
-     * @param itemHeld the item the player is declared to be holding while the
-     * block is placed. Ideally, this should reflect the material of the block
-     * being placed.
+     * @param blockAgainst the block against which the new block should be placed. CAN be
+     * air, but this might cause other plugins to malfunction
+     * @param blockFace the face of blockAgainst on which the new block will be placed.
+     * This also determines the location of the new block
+     * @param itemHeld the item the player is declared to be holding while the block is
+     * placed. Ideally, this should reflect the material of the block being placed.
      * @return true if the block placement has been successful
      */
     public static boolean attemptBlockPlacementAsPlayer(Player player, Material mat, int blockData, Block blockAgainst, BlockFace blockFace, ItemStack itemHeld) {
@@ -118,15 +126,15 @@ public class Utilities {
     }
 
     /**
-     * Match an item stack against a number of criteria. Eliminates huge chains
-     * of null checks
+     * Match an item stack against a number of criteria. Eliminates huge chains of null
+     * checks
      *
      * @param is the item stack to match
      * @param mat the material to look for. null if irrelevant
      * @param durability the damage value to look for. -1 if irrelevant
      * @param name the name the item must have. null if irrelevant
-     * @param lore a line of lore that must be contained in the item stack. null
-     * if irrelevant
+     * @param lore a line of lore that must be contained in the item stack. null if
+     * irrelevant
      * @return true if the item stack matches all specified criteria
      */
     public static boolean matchItemStack(ItemStack is, Material mat, int durability, String name, String lore) {
@@ -156,6 +164,51 @@ public class Utilities {
             return false;
         }
         return true;
+    }
+
+    /**
+     * Adds a potion effect of given length and intensity to the given entity.
+     *
+     * @param ent the entity to affect
+     * @param type the potion effect type
+     * @param length duration, in ticks, of the potion effect
+     * @param intensity the level of the potion effect
+     *
+     */
+    public static void addPotion(LivingEntity ent, PotionEffectType type, int length, int intensity) {
+        for (PotionEffect eff : ent.getActivePotionEffects()) {
+            if (eff.getType().equals(type)) {
+                if (eff.getAmplifier() > intensity) {
+                    return;
+                } else if (eff.getDuration() > length) {
+                    return;
+                } else {
+                    ent.removePotionEffect(type);
+                }
+            }
+        }
+        ent.addPotionEffect(new PotionEffect(type, length, intensity));
+    }
+
+    public static boolean attackEntity(LivingEntity target, Player attacker, double damage) {
+        EntityDamageByEntityEvent damageEvent = new EntityDamageByEntityEvent(attacker, target, EntityDamageEvent.DamageCause.ENTITY_ATTACK, damage);
+        Bukkit.getPluginManager().callEvent(damageEvent);
+        if (!damageEvent.isCancelled()) {
+            target.damage(damage);
+            return true;
+        }
+        return false;
+    }
+
+    // Returns an instance of an AdvancedArrow of the given class
+    public static AdvancedArrow construct(Class cl, Projectile p) {
+        try {
+            Constructor ctor = cl.getDeclaredConstructor(Projectile.class);
+            ctor.setAccessible(true);
+            return (ElementalArrow) ctor.newInstance((Object) p);
+        } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
+        }
+        return null;
     }
 
 }

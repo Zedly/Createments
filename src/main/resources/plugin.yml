@@ -10,6 +10,15 @@ permissions:
   createments.apocalypse:
     description: Starts/Stops the apocalypse
     default: false
+  createments.arrow.info:
+    description: Use of elemental arrow information
+    default: false
+  createments.arrow.create:
+    description: Use of arrow create command
+    default: false
+  createments.arrow.use:
+    description: Use of elemental arrows
+    default: false
   createments.aura:
     description: Spawns an aura around the player
     default: false
@@ -28,6 +37,9 @@ permissions:
   createments.rainbow:
     description: Makes the player's text colorful
     default: false
+  createments.reload:
+    description: Reloads plugin
+    default: false
   
   createments.*:
     children:
@@ -38,3 +50,6 @@ permissions:
         createments.rainboom: true
         createments.rainbow: true
         createments.paragrapher: true
+        createments.arrow.info: true
+        createments.arrow.create: true
+        createments.arrow.use: true
