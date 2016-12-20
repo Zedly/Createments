@@ -210,6 +210,7 @@ public class ElementalArrow implements AdvancedArrow {
         }
 
         public boolean onImpact(EntityDamageByEntityEvent evt) {
+            
             LivingEntity ent = (LivingEntity) evt.getEntity();
             if (ent instanceof Player) {
                 Player player = (Player) ent;
