@@ -36,6 +36,16 @@ public class Watcher implements Listener {
                 text = text.replace(sub.getKey(), sub.getValue());
             }
         }
+        
+        if (text.matches("(.*)\\b[tT][hH][eE] [bB][oO][xX]\\b(.*)")) {
+            if (evt.getPlayer().hasPermission("createments.thebox")) {
+                text = text.replaceAll("\\b[tT][hH][eE] [bB][oO][xX]\\b", ChatColor.DARK_RED + "The Box" + ChatColor.RESET);
+                for (Player p : Storage.createments.getServer().getOnlinePlayers()) {
+                    p.playSound(p.getLocation(), Sound.AMBIENT_CAVE, 5, 1);
+                }
+            }
+        }
+        
         synchronized (Storage.rainbowplayers) {
             if (Storage.rainbowplayers.contains(evt.getPlayer())) {
                 text = Utilities.applyRainbowColors(text);

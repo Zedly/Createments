@@ -33,7 +33,8 @@ public class DeathCharmWatcher implements Listener {
                         && stk.getItemMeta().hasLore()
                         && stk.getItemMeta().hasDisplayName()
                         && stk.getItemMeta().getLore().get(0) != null) {
-                    if (stk.getItemMeta().getDisplayName().equals(ChatColor.DARK_PURPLE + "Advanced Death Charm") && stk.getItemMeta().getLore().get(0).contains(Storage.BOX_CHAR + "")) {
+                    if (stk.getItemMeta().getDisplayName().equals(ChatColor.DARK_PURPLE + "Advanced Death Charm") 
+                            && stk.getItemMeta().getLore().get(0).contains(Storage.BOX_CHAR + "")) {
                         int charge = getDeathCharmCharge(stk);
                         if (charge <= 0) {
                             continue;
@@ -43,7 +44,8 @@ public class DeathCharmWatcher implements Listener {
                         evt.setKeepLevel(true);
                         evt.setDroppedExp(0);
                         break;
-                    } else if (stk.getItemMeta().getDisplayName().equals(ChatColor.GOLD + "Basic Death Charm") && stk.getItemMeta().getLore().get(0).contains(Storage.BOX_CHAR + "")) {
+                    } else if (stk.getItemMeta().getDisplayName().equals(ChatColor.GOLD + "Basic Death Charm") 
+                            && stk.getItemMeta().getLore().get(0).contains(Storage.BOX_CHAR + "")) {
                         int charge = getDeathCharmCharge(stk);
                         if (charge <= 0) {
                             continue;

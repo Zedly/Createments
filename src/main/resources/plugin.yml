@@ -40,6 +40,9 @@ permissions:
   createments.reload:
     description: Reloads plugin
     default: false
+  createments.thebox:
+    description: THE BOX
+    default: true
   
   createments.*:
     children:
@@ -53,3 +56,4 @@ permissions:
         createments.arrow.info: true
         createments.arrow.create: true
         createments.arrow.use: true
+        createments.thebox: true
