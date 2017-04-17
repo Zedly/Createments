@@ -144,7 +144,7 @@ public class Watcher implements Listener {
 
     @EventHandler
     public void onPlayerEditBook(final PlayerEditBookEvent evt) {
-        if (evt.getPreviousBookMeta().getLore().contains(ChatColor.YELLOW + "Paragrapher")) {
+        if (evt.getPreviousBookMeta() != null && evt.getPreviousBookMeta().getLore().contains(ChatColor.YELLOW + "Paragrapher")) {
             BookMeta m = evt.getNewBookMeta().clone();
             m.setLore(evt.getPreviousBookMeta().getLore());
             evt.setNewBookMeta(m);
