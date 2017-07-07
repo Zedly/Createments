@@ -12,6 +12,7 @@ public class Recipes {
         advancedDeathCharm();
         cobweb();
         ropeLadder();
+        killCounter();
     }
 
     public static void deathCharm() {
@@ -56,6 +57,18 @@ public class Recipes {
         ladder.setItemMeta(meta);
         ShapelessRecipe recipe = new ShapelessRecipe(new ItemStack(ladder));
         recipe.addIngredient(Material.LADDER).addIngredient(Material.LADDER).addIngredient(Material.STRING);
+        Bukkit.addRecipe(recipe);
+    }
+    
+    public static void killCounter() {
+        ItemStack paper = new ItemStack(Material.PAPER, 1);
+        ItemMeta meta = paper.getItemMeta();
+        List<String> lore = new ArrayList<>();
+        lore.add(ChatColor.GOLD + "Kill Counter");
+        meta.setLore(lore);
+        paper.setItemMeta(meta);
+        ShapelessRecipe recipe = new ShapelessRecipe(new ItemStack(paper));
+        recipe.addIngredient(Material.PAPER).addIngredient(Material.IRON_INGOT).addIngredient(Material.REDSTONE);
         Bukkit.addRecipe(recipe);
     }
 }

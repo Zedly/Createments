@@ -19,6 +19,11 @@ import zedly.createments.projectiles.ElementalArrow;
 
 public class Utilities {
 
+    // Displays a particle with the given data
+    public static void display(Location loc, Particle particle, int amount, double speed, double xO, double yO, double zO) {
+        loc.getWorld().spawnParticle(particle, loc.getX(), loc.getY(), loc.getZ(), amount, (float) xO, (float) yO, (float) zO, (float) speed);
+    }
+    
     /**
      * Calculates the Location corresponding to the horizontal center of the
      * same block coordinates as the given location. The result has an

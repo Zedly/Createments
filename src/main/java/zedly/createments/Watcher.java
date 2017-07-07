@@ -159,6 +159,37 @@ public class Watcher implements Listener {
     }
 
     @EventHandler
+    public void onEntityDeath(EntityDeathEvent evt) {
+        if (!(evt.getEntity().getLastDamageCause() instanceof EntityDamageByEntityEvent)) {
+            return;
+        }
+        EntityDamageByEntityEvent eevt = (EntityDamageByEntityEvent) evt.getEntity().getLastDamageCause();
+        if (!(eevt.getDamager() instanceof Player)) {
+            return;
+        }
+        Player p = (Player) eevt.getDamager();
+        ItemStack is = p.getInventory().getItemInMainHand();
+        if (is == null || is.getType() == Material.AIR || !is.hasItemMeta() || !is.getItemMeta().hasLore()) {
+            return;
+        }
+        ItemMeta meta = is.getItemMeta();
+        List<String> lore = is.getItemMeta().getLore();
+        for (int i = 0; i < lore.size(); i++) {
+            String line = lore.get(i);
+            if (line.matches(ChatColor.GOLD + "Kills: \\d+")) {
+                int kills = Integer.parseInt(line.substring(9));
+                kills++;
+                lore.set(i, ChatColor.GOLD + "Kills: " + kills);
+                break;
+            }
+        }
+        meta.setLore(lore);
+        is.setItemMeta(meta);
+        p.getInventory().setItemInMainHand(is);
+        p.updateInventory();
+    }
+
+    @EventHandler
     public void onPlayerEditBook(final PlayerEditBookEvent evt) {
         if (evt.getPreviousBookMeta() != null && evt.getPreviousBookMeta().getLore().contains(ChatColor.YELLOW + "Paragrapher")) {
             BookMeta m = evt.getNewBookMeta().clone();
@@ -170,24 +201,53 @@ public class Watcher implements Listener {
     @EventHandler // Advanced Projectiles & Baseballs
     public void onInteract(PlayerInteractEvent evt) {
         // Advanced Projectiles
-        if (evt.getAction() == RIGHT_CLICK_AIR && evt.getPlayer().getInventory().getItemInMainHand() != null) {
-            if (Utilities.matchItemStack(evt.getPlayer().getInventory().getItemInMainHand(), Material.FIREBALL, -1, null, null)) {
-                if (evt.getPlayer().getInventory().getItemInMainHand().getItemMeta().hasLore()) {
-                    ItemStack is = evt.getPlayer().getInventory().getItemInMainHand();
-                    if (AdvancedProjectile.isAdvancedFireball(is)) {
-                        SmallFireball sf = (SmallFireball) evt.getPlayer().getWorld().spawnEntity(evt.getPlayer().getLocation().add(new Vector(0, 1.62, 0)).add(evt.getPlayer().getLocation().getDirection().multiply(2.5)), EntityType.SMALL_FIREBALL);
-                        sf.setVelocity(evt.getPlayer().getLocation().getDirection().multiply(1.5));
-                        sf.setIsIncendiary(false);
-                        AdvancedProjectile ap = AdvancedProjectile.create(is, sf);
-                        Storage.advancedProjectiles.put(sf, ap);
-                        if (is.getAmount() == 1) {
-                            evt.getPlayer().setItemInHand(new ItemStack(0, 0));
-                        } else {
-                            is.setAmount(is.getAmount() - 1);
-                        }
-                    }
+        if (evt.getAction() == RIGHT_CLICK_AIR && evt.getPlayer().getInventory().getItemInMainHand() != null
+                && Utilities.matchItemStack(evt.getPlayer().getInventory().getItemInMainHand(), Material.FIREBALL, -1, null, null)
+                && evt.getPlayer().getInventory().getItemInMainHand().getItemMeta().hasLore()) {
+            ItemStack is = evt.getPlayer().getInventory().getItemInMainHand();
+            if (AdvancedProjectile.isAdvancedFireball(is)) {
+                SmallFireball sf = (SmallFireball) evt.getPlayer().getWorld().spawnEntity(evt.getPlayer().getLocation().add(new Vector(0, 1.62, 0)).add(evt.getPlayer().getLocation().getDirection().multiply(2.5)), EntityType.SMALL_FIREBALL);
+                sf.setVelocity(evt.getPlayer().getLocation().getDirection().multiply(1.5));
+                sf.setIsIncendiary(false);
+                AdvancedProjectile ap = AdvancedProjectile.create(is, sf);
+                Storage.advancedProjectiles.put(sf, ap);
+                if (is.getAmount() == 1) {
+                    evt.getPlayer().setItemInHand(new ItemStack(0, 0));
+                } else {
+                    is.setAmount(is.getAmount() - 1);
                 }
             }
+        } else if ((evt.getAction() == Action.RIGHT_CLICK_BLOCK || evt.getAction() == Action.RIGHT_CLICK_AIR && evt.getHand() == EquipmentSlot.HAND)
+                && evt.getPlayer().isSneaking()
+                && Utilities.matchItemStack(evt.getPlayer().getInventory().getItemInMainHand(), Material.PAPER, -1, null, ChatColor.GOLD + "Kill Counter")) {
+
+            ItemStack is = evt.getPlayer().getInventory().getItemInOffHand();
+            if (is == null || is.getType() == Material.AIR) {
+                evt.getPlayer().sendMessage(ChatColor.GRAY + "Hold an item in your off hand to add a Kill Counter!");
+                return;
+            }
+
+            ItemMeta meta = is.getItemMeta();
+            List<String> lore = is.getItemMeta().getLore();
+            if (lore != null) {
+                for (int i = 0; i < lore.size(); i++) {
+                    String line = lore.get(i);
+                    if (line.matches(ChatColor.GOLD + "Kills: \\d+")) {
+                        evt.getPlayer().sendMessage(ChatColor.GRAY + "This item already has a Kill Counter!");
+                        return;
+                    }
+                }
+            } else {
+                lore = new ArrayList<>();
+            }
+            lore.add(ChatColor.GOLD + "Kills: 0");
+            meta.setLore(lore);
+            is.setItemMeta(meta);
+            evt.getPlayer().getInventory().setItemInOffHand(is);
+            Utilities.removeItem(evt.getPlayer().getInventory(), EquipmentSlot.HAND, 1);
+            Utilities.display(evt.getPlayer().getEyeLocation(), Particle.CRIT, 100, 0.3, 3, 3, 3);
+            evt.getPlayer().sendMessage(ChatColor.GRAY + "Kill Counter added");
+            evt.getPlayer().updateInventory();
         }
     }
 
