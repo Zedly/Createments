@@ -36,7 +36,7 @@ public class Watcher implements Listener {
                 text = text.replace(sub.getKey(), sub.getValue());
             }
         }
-        
+
         if (text.matches("(.*)\\b[tT][hH][eE] [bB][oO][xX]\\b(.*)")) {
             if (evt.getPlayer().hasPermission("createments.thebox")) {
                 text = text.replaceAll("\\b[tT][hH][eE] [bB][oO][xX]\\b", ChatColor.DARK_RED + "The Box" + ChatColor.RESET);
@@ -45,7 +45,7 @@ public class Watcher implements Listener {
                 }
             }
         }
-        
+
         synchronized (Storage.rainbowplayers) {
             if (Storage.rainbowplayers.contains(evt.getPlayer())) {
                 text = Utilities.applyRainbowColors(text);
@@ -139,6 +139,22 @@ public class Watcher implements Listener {
                     evt.getBlock().getLocation().getWorld().spigot().playEffect(loc, Effect.COLOURED_DUST, 0, 1, 0, 0, 0, 10f, 1, 32);
                 }
             }, (int) (q * time + 1));
+        }
+    }
+
+    @EventHandler
+    public void onPlace(BlockPlaceEvent evt) {
+        ItemStack is = evt.getItemInHand();
+
+        if (is != null && is.getType() == Material.LADDER && is.hasItemMeta() && is.getItemMeta().hasDisplayName()
+                && is.getItemMeta().getDisplayName().equals(ChatColor.AQUA + "Rope Ladder")) {
+            Player p = evt.getPlayer();
+            PlayerInventory inv = p.getInventory();
+
+            evt.setCancelled(true);
+            Utilities.removeItem(inv, evt.getHand(), 1);
+            evt.getPlayer().updateInventory();
+            evt.getBlock().getWorld().spawnFallingBlock(evt.getBlock().getLocation().add(.5, 0, .5), Material.LADDER, evt.getBlockPlaced().getData());
         }
     }
 

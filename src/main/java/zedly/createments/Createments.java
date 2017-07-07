@@ -21,8 +21,7 @@ public class Createments extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new DeathCharmWatcher(), this);
         getServer().getPluginManager().registerEvents(new RagequitWatcher(), this);
         getServer().getPluginManager().registerEvents(new AprilWatcher(), this);
-        Recipes.advancedDeathCharm();
-        Recipes.deathCharm();
+        Recipes.apply();
     }
 
     public boolean onCommand(CommandSender sender, Command command, String commandlabel, String[] args) {
