@@ -1,6 +1,7 @@
 name: Createments
 main: zedly.createments.Createments
-version: 3.14.159.26535
+version: 3.14.159.26535.8
+api-version: 1.14
 commands:
   cr:
     description: 

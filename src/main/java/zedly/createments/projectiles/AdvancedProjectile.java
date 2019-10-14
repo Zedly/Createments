@@ -43,7 +43,7 @@ public abstract class AdvancedProjectile {
      * @return true if the stack meets all ctireria for an advanced fireball
      */
     public static boolean isAdvancedFireball(ItemStack is) {
-        if (!Utilities.matchItemStack(is, Material.FIREBALL, -1, null, null)) {
+        if (!Utilities.matchItemStack(is, Material.FIRE_CHARGE, null, null)) {
             return false;
         }
         if (is.hasItemMeta() && is.getItemMeta().hasLore() && is.getItemMeta().getLore().size() >= 1

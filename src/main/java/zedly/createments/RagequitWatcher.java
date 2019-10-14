@@ -22,7 +22,7 @@ public class RagequitWatcher implements Listener {
 
     private static final HashSet<Player> ragequits = new HashSet<>();
 
-    @EventHandler // Death Charms
+    @EventHandler
     public void onPlayerDeath(PlayerDeathEvent evt) {
         if (evt.getEntity() instanceof Player) {
             ragequits.add((Player) evt.getEntity());

@@ -14,11 +14,40 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.*;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import zedly.createments.projectiles.AdvancedArrow;
-import zedly.createments.projectiles.ElementalArrow;
 
 public class Utilities {
+    
+    
+/**
+     * Checks if the given Block is any of the materials representing a type of
+     * sign in 1.14.4.
+     *
+     * @param block
+     * @return true if the block is a sign
+     */
+    public static boolean isSign(Block block) {
+        return block != null && isMaterialSign(block.getType());
+    }
 
+    public static boolean isMaterialSign(final Material material) {
+        switch (material) {
+            case ACACIA_SIGN:
+            case ACACIA_WALL_SIGN:
+            case BIRCH_SIGN:
+            case BIRCH_WALL_SIGN:
+            case DARK_OAK_SIGN:
+            case DARK_OAK_WALL_SIGN:
+            case JUNGLE_SIGN:
+            case JUNGLE_WALL_SIGN:
+            case OAK_SIGN:
+            case OAK_WALL_SIGN:
+            case SPRUCE_SIGN:
+            case SPRUCE_WALL_SIGN:
+                return true;
+            default:
+                return false;
+        }
+    }
     // Displays a particle with the given data
     public static void display(Location loc, Particle particle, int amount, double speed, double xO, double yO, double zO) {
         loc.getWorld().spawnParticle(particle, loc.getX(), loc.getY(), loc.getZ(), amount, (float) xO, (float) yO, (float) zO, (float) speed);
@@ -178,7 +207,6 @@ public class Utilities {
         if (!placeEvent.isCancelled()) {
             Block relativeBlock = blockAgainst.getRelative(blockFace);
             relativeBlock.setType(mat);
-            relativeBlock.setData((byte) blockData);
             return true;
         }
         return false;
@@ -196,14 +224,11 @@ public class Utilities {
      * if irrelevant
      * @return true if the item stack matches all specified criteria
      */
-    public static boolean matchItemStack(ItemStack is, Material mat, int durability, String name, String lore) {
+    public static boolean matchItemStack(ItemStack is, Material mat, String name, String lore) {
         if (is == null) {
             return false;
         }
         if (mat != null && is.getType() != mat) {
-            return false;
-        }
-        if (durability != -1 && is.getDurability() != durability) {
             return false;
         }
         if ((name != null || lore != null) && !is.hasItemMeta()) {
@@ -258,16 +283,4 @@ public class Utilities {
         }
         return false;
     }
-
-    // Returns an instance of an AdvancedArrow of the given class
-    public static AdvancedArrow construct(Class cl, Projectile p) {
-        try {
-            Constructor ctor = cl.getDeclaredConstructor(Projectile.class);
-            ctor.setAccessible(true);
-            return (ElementalArrow) ctor.newInstance((Object) p);
-        } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
-        }
-        return null;
-    }
-
 }

@@ -5,7 +5,6 @@ import java.util.Map;
 import org.bukkit.command.*;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
-import zedly.createments.projectiles.ElementalArrow;
 
 public class Createments extends JavaPlugin {
 
@@ -14,11 +13,8 @@ public class Createments extends JavaPlugin {
         getDataFolder().mkdir();
         saveDefaultConfig();
         loadConfig();
-        ElementalArrow.init();
-        getServer().getPluginManager().registerEvents(new WatcherArrow(), this);
         getServer().getScheduler().scheduleSyncRepeatingTask(this, new HFEffects(), 0, 1);
         getServer().getPluginManager().registerEvents(new Watcher(), this);
-        getServer().getPluginManager().registerEvents(new DeathCharmWatcher(), this);
         getServer().getPluginManager().registerEvents(new RagequitWatcher(), this);
         getServer().getPluginManager().registerEvents(new AprilWatcher(), this);
         Recipes.apply();

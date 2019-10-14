@@ -7,7 +7,7 @@ package zedly.createments;
 
 import java.util.HashMap;
 import org.bukkit.Bukkit;
-import org.bukkit.Effect;
+import org.bukkit.Particle;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
@@ -53,7 +53,7 @@ public class Aura implements Runnable {
             stop();
             return;
         }
-        player.getWorld().spigot().playEffect(player.getLocation().add(new Vector(0, 2, 0)), Effect.FLYING_GLYPH, 0, 0, 0, 3, 0, 2, 5, 100);
+        Utilities.display(player.getLocation().add(new Vector(0, 2, 0)), Particle.ENCHANTMENT_TABLE, 10, 1.0, 0, 0, 3);
     }
 
     private void stop() {
