@@ -86,14 +86,8 @@ public abstract class AdvancedProjectile {
 
     static {
         projectileTable = new HashMap<>();
-        projectileTable.put(ChatColor.DARK_RED + "Missile", (sf) -> {
-            return new ProjectileMissile(sf);
-        });
         projectileTable.put(ChatColor.GOLD + "Repulsor", (sf) -> {
             return new ProjectileRepulsor(sf);
-        });
-        projectileTable.put(ChatColor.BLACK + "Destructor", (sf) -> {
-            return new ProjectileDestructor(sf);
         });
         projectileTable.put(ChatColor.YELLOW + "Spark", (sf) -> {
             return new ProjectileSpark(sf);

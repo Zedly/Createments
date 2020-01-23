@@ -159,19 +159,6 @@ public class Watcher implements Listener {
         }
     }
 
-    @EventHandler // 321 Explosive Items
-    public void onItemPickup(EntityPickupItemEvent evt) {
-        if (evt.getEntity().getType() != EntityType.PLAYER) {
-            return;
-        }
-        ItemStack stk = evt.getItem().getItemStack();
-        if (stk.hasItemMeta() && stk.getItemMeta().hasLore()
-                && stk.getItemMeta().getLore().contains("321")) {
-            Location l = evt.getItem().getLocation();
-            evt.getItem().getLocation().getWorld().createExplosion(l.getX(), l.getY(), l.getZ(), 25, false, false);
-        }
-    }
-
     @EventHandler // Advanced Projectiles & Lore Bows
     public void onProjectileHit(ProjectileHitEvent evt) {
         // Advanced Projectiles
