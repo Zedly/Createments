@@ -14,15 +14,11 @@ public class ProjectileRepulsor extends AdvancedProjectile {
     public static final FireworkEffect.Builder bu;
 
     public ProjectileRepulsor(SmallFireball sf) {
-           super(sf);
- }
+        super(sf);
+    }
 
     public void trail() {
-        try {
-            FireworkEffectPlayer.playFirework(sf.getLocation(), bu.build());
-        } catch (Exception ex) {
-            sf.remove();
-        }
+        FireworkEffectPlayer.playFirework(sf.getLocation(), bu.build());
     }
 
     public void impact() {
@@ -33,6 +29,7 @@ public class ProjectileRepulsor extends AdvancedProjectile {
             ent.setVelocity(dv);
         }
         sf.getWorld().createExplosion(sf.getLocation(), 0);
+        sf.remove();
     }
 
     static {

@@ -16,16 +16,13 @@ public class ProjectileMissile extends AdvancedProjectile {
 
     @Override
     public void trail() {
-        try {
-            FireworkEffectPlayer.playFirework(sf.getLocation(), bu.build());
-        } catch (Exception ex) {
-            sf.remove();
-        }
+        FireworkEffectPlayer.playFirework(sf.getLocation(), bu.build());
     }
 
     @Override
     public void impact() {
         sf.getLocation().getWorld().createExplosion(sf.getLocation().getX(), sf.getLocation().getY(), sf.getLocation().getZ(), 5, false, false);
+        sf.remove();
     }
 
     static {

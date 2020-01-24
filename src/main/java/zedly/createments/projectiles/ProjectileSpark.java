@@ -20,11 +20,8 @@ public class ProjectileSpark extends AdvancedProjectile {
 
     @Override
     public void trail() {
-        try {
-            FireworkEffectPlayer.playFirework(sf.getLocation(), bu.build());
-        } catch (Exception ex) {
-            sf.remove();
-        }
+        FireworkEffectPlayer.playFirework(sf.getLocation(), bu.build());
+        
         s_tick--;
         if (s_tick == 0) {
             impact();
@@ -43,7 +40,7 @@ public class ProjectileSpark extends AdvancedProjectile {
             sf1.setVelocity(new Vector(Storage.rnd.nextGaussian(), Storage.rnd.nextGaussian(), Storage.rnd.nextGaussian()));
             Storage.advancedProjectiles.put(sf1, new ProjectileSparkle(sf1, color));
         }
-
+        sf.remove();
     }
 
     static {

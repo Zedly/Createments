@@ -21,25 +21,17 @@ public class ProjectileSparkle extends AdvancedProjectile {
 
     @Override
     public void trail() {
-        try {
-            FireworkEffectPlayer.playFirework(sf.getLocation(), bu.build());
-        } catch (Exception ex) {
-            sf.remove();
-        }
+        FireworkEffectPlayer.playFirework(sf.getLocation(), bu.build());
         tick--;
         if (tick == 0) {
             impact();
-            sf.remove();
         }
     }
 
     @Override
     public void impact() {
-        try {
-            FireworkEffectPlayer.playFirework(sf.getLocation(), bu1.build());
-        } catch (Exception ex) {
-            sf.remove();
-        }
+        FireworkEffectPlayer.playFirework(sf.getLocation(), bu1.build());
+        sf.remove();
     }
 
     static {

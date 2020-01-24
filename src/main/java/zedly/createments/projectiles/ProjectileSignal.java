@@ -17,18 +17,15 @@ public class ProjectileSignal extends AdvancedProjectile {
 
     @Override
     public void trail() {
-        if(tick == 8) {
+        if (tick == 8) {
             impact();
         }
     }
 
     @Override
     public void impact() {
-        try {
-            FireworkEffectPlayer.playFirework(sf.getLocation(), bu.build());
-        } catch (Exception ex) {
-            sf.remove();
-        }
+        FireworkEffectPlayer.playFirework(sf.getLocation(), bu.build());
+        sf.remove();
     }
 
     static {

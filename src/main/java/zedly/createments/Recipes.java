@@ -8,17 +8,7 @@ import org.bukkit.inventory.meta.*;
 public class Recipes {
     
     public static void apply() {
-        cobweb();
         killCounter();
-    }
-    
-    public static void cobweb() {
-        ItemStack cobweb = new ItemStack(Material.COBWEB, 1);
-        ShapedRecipe recipe = new ShapedRecipe(new NamespacedKey(Storage.createments, "cobweb"), cobweb);
-        recipe.shape("SAS", "ASA", "SAS");
-        recipe.setIngredient('S', Material.STRING);
-        recipe.setIngredient('A', Material.AIR);
-        Bukkit.addRecipe(recipe);
     }
     
     public static void killCounter() {
@@ -26,6 +16,10 @@ public class Recipes {
         ItemMeta meta = paper.getItemMeta();
         List<String> lore = new ArrayList<>();
         lore.add(ChatColor.GOLD + "Kill Counter");
+        lore.add(ChatColor.GREEN + "Add to a tool:");
+        lore.add(ChatColor.GREEN + " 1. Kill Counter in off-hand");
+        lore.add(ChatColor.GREEN + " 2. Tool in main hand");
+        lore.add(ChatColor.GREEN + " 3. Shift-right-click");
         meta.setLore(lore);
         paper.setItemMeta(meta);
         ShapelessRecipe recipe = new ShapelessRecipe(new NamespacedKey(Storage.createments, "killcounter"), new ItemStack(paper));
