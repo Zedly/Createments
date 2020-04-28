@@ -1,6 +1,5 @@
 package zedly.createments;
 
-import zedly.createments.projectiles.*;
 import java.util.*;
 import org.bukkit.*;
 import org.bukkit.entity.*;
@@ -9,7 +8,6 @@ public class Storage {
 
     public static final Random rnd = new Random();
     public static final String logo = ChatColor.COLOR_CHAR + "9[" + ChatColor.COLOR_CHAR + "3Createments" + ChatColor.COLOR_CHAR + "9]" + ChatColor.COLOR_CHAR + "b";
-    public static final Map<Entity, AdvancedProjectile> advancedProjectiles = new HashMap<>();
     
     
     public static final LinkedHashMap<String, String> emoticonSubstitutions = new LinkedHashMap<>();

@@ -3,8 +3,6 @@ package zedly.createments;
 import org.bukkit.*;
 import org.bukkit.command.*;
 import org.bukkit.entity.*;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.util.Vector;
 
 public class CommandProcessor {
 
@@ -75,25 +73,6 @@ public class CommandProcessor {
         sender.sendMessage(sb.toString());
     }
 
-    public static void rainboom(CommandSender sender) {
-        if (!sender.hasPermission("createments.rainboom")) {
-            sender.sendMessage(Storage.logo + " You do not have permission to do this!");
-            return;
-        }
-        if (!(sender instanceof Player)) {
-            sender.sendMessage(Storage.logo + " This only works ingame!");
-            return;
-        }
-        Player player = (Player) sender;
-        if (Rainboom.isEnabledFor(player)) {
-            Rainboom.disableFor(player);
-            player.sendMessage(Storage.logo + " Rainboom disabled!");
-        } else {
-            Rainboom.enableFor(player);
-            player.sendMessage(Storage.logo + " Rainboom enabled!");
-        }
-    }
-
     public static void rainbow(CommandSender sender) {
         if (!sender.hasPermission("createments.rainbow")) {
             sender.sendMessage(Storage.logo + " You do not have permission to do this!");
@@ -142,9 +121,6 @@ public class CommandProcessor {
                         break;
                     case "rainbow":
                         rainbow(sender);
-                        break;
-                    case "rainboom":
-                        rainboom(sender);
                         break;
                     case "emotes":
                         emotes(sender);

@@ -1,6 +1,5 @@
 package zedly.createments;
 
-import zedly.createments.projectiles.*;
 import java.util.*;
 import java.util.Map.Entry;
 import org.bukkit.*;
@@ -17,8 +16,7 @@ import org.bukkit.util.Vector;
 
 public class Watcher implements Listener {
 
-    private final HashMap<Location, String> advancedFireballsDispensing = new HashMap<>();
-
+    
     @EventHandler // Rainbow Chat
     public void onChat(AsyncPlayerChatEvent evt) {
         String text = evt.getMessage();
@@ -45,16 +43,7 @@ public class Watcher implements Listener {
         evt.setMessage(text);
     }
 
-    @EventHandler // Advanced Projectiles in Dispensers & Paragraphers
-    public void onParticleDispenser(final BlockDispenseEvent evt) {
-        ItemStack stk = (ItemStack) evt.getItem();
-
-        // Advanced Projectiles in Dispensers
-        if (AdvancedProjectile.isAdvancedFireball(stk)) {
-            advancedFireballsDispensing.put(evt.getBlock().getLocation(), stk.getItemMeta().getLore().get(0));
-            return;
-        }
-    }
+    
 
     @EventHandler
     public void onEntityDeath(EntityDeathEvent evt) {
@@ -90,24 +79,7 @@ public class Watcher implements Listener {
     @EventHandler // Advanced Projectiles & Baseballs
     public void onInteract(PlayerInteractEvent evt) {
         // Advanced Projectiles
-        if (evt.getAction() == RIGHT_CLICK_AIR
-                && Utilities.matchItemStack(evt.getPlayer().getInventory().getItemInMainHand(), Material.FIRE_CHARGE, null, null)
-                && evt.getPlayer().getInventory().getItemInMainHand().getItemMeta().hasLore()) {
-            ItemStack is = evt.getPlayer().getInventory().getItemInMainHand();
-            if (AdvancedProjectile.isAdvancedFireball(is)) {
-                SmallFireball sf = (SmallFireball) evt.getPlayer().getWorld().spawnEntity(evt.getPlayer().getLocation().add(new Vector(0, 1.62, 0)).add(evt.getPlayer().getLocation().getDirection().multiply(2.5)), EntityType.SMALL_FIREBALL);
-                sf.setVelocity(evt.getPlayer().getLocation().getDirection().multiply(1.5));
-                sf.setIsIncendiary(false);
-                AdvancedProjectile ap = AdvancedProjectile.create(is, sf);
-                Storage.advancedProjectiles.put(sf, ap);
-                if (is.getAmount() == 1) {
-                    evt.getPlayer().getInventory().setItemInMainHand(new ItemStack(AIR));
-                } else {
-                    is.setAmount(is.getAmount() - 1);
-                    evt.getPlayer().getInventory().setItemInMainHand(is);
-                }
-            }
-        } else if ((evt.getAction() == Action.RIGHT_CLICK_BLOCK || evt.getAction() == Action.RIGHT_CLICK_AIR && evt.getHand() == EquipmentSlot.HAND)
+        if ((evt.getAction() == Action.RIGHT_CLICK_BLOCK || evt.getAction() == Action.RIGHT_CLICK_AIR && evt.getHand() == EquipmentSlot.HAND)
                 && evt.getPlayer().isSneaking()
                 && Utilities.matchItemStack(evt.getPlayer().getInventory().getItemInMainHand(), Material.PAPER, null, ChatColor.GOLD + "Kill Counter")) {
 
@@ -156,31 +128,6 @@ public class Watcher implements Listener {
                     }
                 }
             }
-        }
-    }
-
-    @EventHandler // Advanced Projectiles & Lore Bows
-    public void onProjectileHit(ProjectileHitEvent evt) {
-        // Advanced Projectiles
-        if (Storage.advancedProjectiles.containsKey(evt.getEntity())) {
-            Storage.advancedProjectiles.get(evt.getEntity()).impact();
-            Storage.advancedProjectiles.remove(evt.getEntity());
-        }
-    }
-
-    @EventHandler // Advanced Projectiles in Dispensers
-    public void onProjectileLaunch(ProjectileLaunchEvent evt) {
-        Set<Location> toDie = new HashSet<>();
-        for (Location l : advancedFireballsDispensing.keySet()) {
-            if (l.distance(evt.getEntity().getLocation()) < 2) {
-                String loreString = advancedFireballsDispensing.get(l);
-                AdvancedProjectile ap = AdvancedProjectile.create(loreString, (SmallFireball) evt.getEntity());
-                Storage.advancedProjectiles.put(evt.getEntity(), ap);
-                toDie.add(l);
-            }
-        }
-        for (Location l : toDie) {
-            advancedFireballsDispensing.remove(l);
         }
     }
 }

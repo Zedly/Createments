@@ -1,13 +1,10 @@
 package zedly.createments;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Projectile;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -92,7 +89,7 @@ public class Utilities {
         char[] msg = message.toCharArray();
         String m = "";
         for (char s : msg) {
-            if (!m.endsWith("§")) {
+            if (!m.endsWith("\u00A7")) {
                 m += Storage.textrainbow[it = (it + 1) % 12];
             }
             m += s;

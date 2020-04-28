@@ -13,7 +13,6 @@ public class Createments extends JavaPlugin {
         getDataFolder().mkdir();
         saveDefaultConfig();
         loadConfig();
-        getServer().getScheduler().scheduleSyncRepeatingTask(this, new HFEffects(), 0, 1);
         getServer().getPluginManager().registerEvents(new Watcher(), this);
         getServer().getPluginManager().registerEvents(new RagequitWatcher(), this);
         getServer().getPluginManager().registerEvents(new AprilWatcher(), this);
